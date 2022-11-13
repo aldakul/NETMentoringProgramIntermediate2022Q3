@@ -1,0 +1,18 @@
+Server=localhost\SQLEXPRESS;Database=master;Trusted_Connection=True;
+
+1. open cmd
+2. run:
+sqlcmd -S EPKZALMW0163\SQLEXPRESS -E
+
+USE [master];
+GO
+restore database [ProfileSample]
+from disk = N'C:\Users\Bauyrzhan_Aldakulov\Downloads\aldakul\NETMentoringProgramIntermediate2022Q3\Analyzing and profiling tools\ProfileSample\ProfileSample\App_Data\sample.bak'
+WITH MOVE 'ProfileSample' TO 'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ProfileSample.mdf',
+MOVE 'ProfileSample_log' TO 'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ProfileSample_log.ldf';
+Go
+
+
+C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ProfileSample.mdf
+ProfileSample_log.ldf
+
