@@ -11,16 +11,9 @@ namespace GameOfLife
     {
         private readonly DispatcherTimer adTimer;
         private int imgNmb;     // the number of the image currently shown
-        private string link = "http://example.com";    // the URL where the currently shown ad leads to
-        private readonly ImageBrush myBrush = new ImageBrush();
-        private readonly BitmapImage[] _images =
-        {
-            new BitmapImage(new Uri("ad1.jpg", UriKind.Relative)),
-            new BitmapImage(new Uri("ad2.jpg", UriKind.Relative)),
-            new BitmapImage(new Uri("ad3.jpg", UriKind.Relative))
-        };
-
-
+        private string link;    // the URL where the currently shown ad leads to
+        
+    
         public AdWindow(Window owner)
         {
             Random rnd = new Random();
@@ -34,7 +27,7 @@ namespace GameOfLife
             ShowActivated = false;
             MouseDown += OnClick;
             
-            imgNmb = rnd.Next(0, 2);
+            imgNmb = rnd.Next(1, 3);
             ChangeAds(this, new EventArgs());
 
             // Run the timer that changes the ad's image 
@@ -52,7 +45,7 @@ namespace GameOfLife
         
         protected override void OnClosed(EventArgs e)
         {
-            Unsubscribe();
+            //Unsubscribe();
             base.OnClosed(e);
         } 
 
@@ -63,30 +56,33 @@ namespace GameOfLife
 
         private void ChangeAds(object sender, EventArgs eventArgs)
         {
-            myBrush.ImageSource = _images[imgNmb];
-            Background = myBrush;
-            imgNmb = (imgNmb+1)% _images.Length;
-            //switch (imgNmb)
-            //{
-            //    case 1:
-            //        myBrush.ImageSource =
-            //            new BitmapImage(new Uri("ad1.jpg", UriKind.Relative));
-            //        Background = myBrush;
-            //        imgNmb++;
-            //        break;
-            //    case 2:
-            //        myBrush.ImageSource =
-            //            new BitmapImage(new Uri("ad2.jpg", UriKind.Relative));
-            //        Background = myBrush;
-            //        imgNmb++;
-            //        break;
-            //    case 3:
-            //        myBrush.ImageSource =
-            //            new BitmapImage(new Uri("ad3.jpg", UriKind.Relative));
-            //        Background = myBrush;
-            //        imgNmb = 1;
-            //        break;
-            //}
+            
+            ImageBrush myBrush = new ImageBrush();
+            
+            switch (imgNmb)
+            {
+                case 1:
+                    myBrush.ImageSource =
+                        new BitmapImage(new Uri("ad1.jpg", UriKind.Relative));
+                    Background = myBrush;
+                    link = "http://example.com";
+                    imgNmb++;
+                    break;
+                case 2:
+                    myBrush.ImageSource =
+                        new BitmapImage(new Uri("ad2.jpg", UriKind.Relative));
+                    Background = myBrush;
+                    link = "http://example.com";
+                    imgNmb++;
+                    break;
+                case 3:
+                    myBrush.ImageSource =
+                        new BitmapImage(new Uri("ad3.jpg", UriKind.Relative));
+                    Background = myBrush;
+                    link = "http://example.com";
+                    imgNmb = 1;
+                    break;
+            }
             
         }
     }

@@ -22,23 +22,25 @@ namespace GameOfLife
             timer.Interval = TimeSpan.FromMilliseconds(200);
         }
 
-        private void ExecAds(object sender, EventArgs e)
-        {
-            adWindow = new AdWindow[2];
-            for (var i = 0; i < 2; i++)
-            {
-                adWindow[i] = new AdWindow(this);
-                adWindow[i].Closed += AdWindowOnClosed;
-                adWindow[i].Top = Top + 330 * i + 70;
-                adWindow[i].Left = Left + 240;
-            }
-        }
 
         private void StartAd()
         {
-            for (int i = 0; i < 2; i++)
+            
             {
-                adWindow[i].Show();
+                adWindow = new AdWindow[2];
+                for (int i = 0; i < 2; i++)
+                {
+                    if (adWindow[i] == null)
+                    {
+                        adWindow[i] = new AdWindow(this);
+                        adWindow[i].Closed += AdWindowOnClosed;
+                        adWindow[i].Top = this.Top + (330 * i) + 70;
+                        adWindow[i].Left = this.Left + 240;                        
+                        adWindow[i].Show();
+                    }
+                }
+                
+                
             }
         }
 
@@ -46,11 +48,13 @@ namespace GameOfLife
         {
             for (int i = 0; i < 2; i++)
             {
-                adWindow[i].Hide();
+                adWindow[i].Closed -= AdWindowOnClosed;
+                adWindow[i] = null;
             }
-
-
+            
+            
         }
+
 
         private void Button_OnClick(object sender, EventArgs e)
         {
@@ -78,5 +82,7 @@ namespace GameOfLife
         {
             mainGrid.Clear();
         }
+
+        
     }
 }
