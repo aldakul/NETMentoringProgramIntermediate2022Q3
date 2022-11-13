@@ -10,6 +10,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Web;
 using Expressions.Task3.E3SQueryProvider.Models.Entities;
 using Xunit;
 
@@ -22,6 +23,8 @@ namespace Expressions.Task3.E3SQueryProvider.Test
         [Fact]
         public void TestAndQueryable()
         {
+            //Arrange
+            var ftsRequestGenerator = new FtsRequestGenerator("http://localhost");
             var translator = new ExpressionToFtsRequestTranslator();
             Expression<Func<IQueryable<EmployeeEntity>, IQueryable<EmployeeEntity>>> expression
                 = query => query.Where(e => e.Workstation == "EPRUIZHW006" && e.Manager.StartsWith("John"));
@@ -35,7 +38,14 @@ namespace Expressions.Task3.E3SQueryProvider.Test
              */
 
             // todo: create asserts for this test by yourself, because they will depend on your final implementation
-            throw new NotImplementedException("Please implement this test and the appropriate functionality");
+            
+            //Act
+            var translate = translator.Translate(expression);
+            var generateRequestUrl = ftsRequestGenerator.GenerateRequestUrl<EmployeeEntity>(translate);
+            var urlDecode = HttpUtility.UrlDecode(generateRequestUrl.Query);
+
+            //Assert
+            Assert.Contains("\"statements\":[{\"query\":\"Workstation:(EPRUIZHW006)\"},{\"query\":\"Manager:(John*)\"}]", urlDecode);
         }
 
         #endregion

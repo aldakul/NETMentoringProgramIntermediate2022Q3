@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Text;
 
 namespace Expressions.Task3.E3SQueryProvider
@@ -33,7 +34,32 @@ namespace Expressions.Task3.E3SQueryProvider
 
                 return node;
             }
+
+            if (node.Method.DeclaringType == typeof(string))
+            {
+                ConvertToStringBuilder(node.Object, node.Arguments[0], node.Method.Name);
+                return node;
+            }
+
             return base.VisitMethodCall(node);
+        }
+
+        private void ConvertToStringBuilder(Expression nodeObject, Expression nodeArgument, string methodName)
+        {
+            Visit(nodeObject);
+
+            _resultStringBuilder.Append(":");
+            _resultStringBuilder.Append("(");
+            
+            if (new string[]{ "Contains", "EndsWith" }.Contains(methodName))
+                _resultStringBuilder.Append("*");
+            
+            Visit(nodeArgument);
+            
+            if (new string[] {"Contains", "StartsWith"}.Contains(methodName))
+                _resultStringBuilder.Append("*");
+            
+            _resultStringBuilder.Append(")");
         }
 
         protected override Expression VisitBinary(BinaryExpression node)
@@ -41,16 +67,17 @@ namespace Expressions.Task3.E3SQueryProvider
             switch (node.NodeType)
             {
                 case ExpressionType.Equal:
-                    if (node.Left.NodeType != ExpressionType.MemberAccess)
-                        throw new NotSupportedException($"Left operand should be property or field: {node.NodeType}");
+                    if (node.Left.NodeType == ExpressionType.MemberAccess)
+                        ConvertToStringBuilder(node.Left, node.Right, null);
 
-                    if (node.Right.NodeType != ExpressionType.Constant)
-                        throw new NotSupportedException($"Right operand should be constant: {node.NodeType}");
+                    else
+                        ConvertToStringBuilder(node.Right, node.Left, null);
+                    break;
 
+                case ExpressionType.AndAlso:
                     Visit(node.Left);
-                    _resultStringBuilder.Append("(");
+                    _resultStringBuilder.Append(";");
                     Visit(node.Right);
-                    _resultStringBuilder.Append(")");
                     break;
 
                 default:
@@ -62,7 +89,7 @@ namespace Expressions.Task3.E3SQueryProvider
 
         protected override Expression VisitMember(MemberExpression node)
         {
-            _resultStringBuilder.Append(node.Member.Name).Append(":");
+            _resultStringBuilder.Append(node.Member.Name);
 
             return base.VisitMember(node);
         }

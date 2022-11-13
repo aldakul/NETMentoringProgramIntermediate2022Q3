@@ -64,7 +64,7 @@ namespace Expressions.Task3.E3SQueryProvider.Test
             var translator = new ExpressionToFtsRequestTranslator();
             Expression<Func<EmployeeEntity, bool>> expression
                 = employee => employee.Workstation.StartsWith("EPRUIZHW006");
-            
+
             string translated = translator.Translate(expression);
             Assert.Equal("Workstation:(EPRUIZHW006*)", translated);
         }
