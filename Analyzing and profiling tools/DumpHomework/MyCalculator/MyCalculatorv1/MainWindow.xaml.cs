@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -34,7 +35,13 @@ namespace MyCalculatorv1
 		// Token: 0x06000007 RID: 7 RVA: 0x000020E8 File Offset: 0x000002E8
 		private void result()
 		{
-			int num = 0;
+            if (!Regex.IsMatch(tb.Text, @"^\d+[\+\-\*\/]\d+$"))
+            {
+                tb.Text = "Invalid input";
+                return;
+            }
+
+            int num = 0;
 			bool flag = this.tb.Text.Contains("+");
 			if (flag)
 			{
