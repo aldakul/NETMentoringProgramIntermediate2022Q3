@@ -1,7 +1,12 @@
 ﻿namespace ExpressionTrees.Task2.ExpressionMapping.Tests.Models
 {
-    internal class Bar
+    public class Bar
     {
-        // add here some other properties
+        public string Zero;
+        public string One { get; set; }
+        public string Two;
+        public int Three { get; set; }
+        public string Five { get; set; }
+        public bool Six;
     }
 }
