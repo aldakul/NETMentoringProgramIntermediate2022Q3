@@ -19,5 +19,6 @@ public class ItemDto : IMapWith<Item>
                 opt => opt.MapFrom(xx => xx.CategoryId))
             .ForMember(x => x.Name,
                 opt => opt.MapFrom(xx => xx.Name));
+        profile.CreateMap<PaginationQuery, PaginationFilter>();
     }
 }

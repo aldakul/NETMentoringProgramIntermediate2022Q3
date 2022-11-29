@@ -19,10 +19,29 @@ public class GetItemListQueryHandler
     public async Task<ItemListVm> Handle(GetItemListQuery request,
         CancellationToken cancellationToken)
     {
-        var items = await _dbContext.Items
+        if (request.PaginationFilter == null)
+        {
+            var items = await _dbContext.Items
+                .ProjectTo<ItemDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+
+            if (request.CategoryId != new Guid())
+                items = await _dbContext.Items
+                    .Where(x => x.CategoryId == request.CategoryId)
+                    .ProjectTo<ItemDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync(cancellationToken);
+            
+            return new ItemListVm { Items = items };
+        }
+
+        var skip = (request.PaginationFilter.PageNumber - 1) * request.PaginationFilter.PageSize;
+        var result = await _dbContext.Items
+            .Skip(skip)
+            .Take(request.PaginationFilter.PageSize)
             .ProjectTo<ItemDto>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
+        
+        return new ItemListVm { Items = result };
 
-        return new ItemListVm { Items = items };
     }
 }

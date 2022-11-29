@@ -20,11 +20,16 @@ public class ItemController : BaseController
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ItemListVm>> GetAll()
+    public async Task<ActionResult<ItemDto>> GetAll([FromQuery]PaginationQuery paginationQuery,Guid CategoriesId)
     {
-        var query = new GetItemListQuery();
+        var paginationFilter = _mapper.Map<PaginationFilter>(paginationQuery);
+        var query = new GetItemListQuery
+        {
+            CategoryId = CategoriesId,
+            PaginationFilter = paginationFilter
+        };
         var vm = await Mediator.Send(query);
-        return Ok(vm);
+        return Ok(vm.Items);
     }
 
     [HttpGet("{id}")]

@@ -2,5 +2,5 @@
 
 public class ItemListVm
 {
-    public IList<ItemDto> Items { get; set; }
+    public IEnumerable<ItemDto> Items { get; set; }
 }
