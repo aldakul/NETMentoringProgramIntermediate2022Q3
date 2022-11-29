@@ -19,9 +19,6 @@ builder.Services.AddPersistence(builder.Configuration);
 builder.Services.SeedInMemoryDatabase();
 
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDataAccessDependencies();
-//builder.Services.SeedInMemoryDatabase();
-//builder.Services.AddBusinessLogicServices();
 builder.Services.AddControllers();
 
 var app = builder.Build();
