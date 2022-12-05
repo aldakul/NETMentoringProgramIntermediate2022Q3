@@ -33,3 +33,29 @@ Running Application in local machine
 <p align="center">
 <img src="./Task2/3. WebSite Page.png" width="500"/>
 </p>
+
+
+## Task 3 
+
+- My Docker image is in this url: https://hub.docker.com/repository/docker/bauy/webapp
+
+
+---
+### Steps
+- Create Dockerfile
+- Build App in Docker
+- Run App via Docker
+
+<p align="center">
+<img src="./Task3/3. WebPage.png" width="500"/>
+</p>
+
+
+- Publish Docker Image to Azure
+
+<p align="center">
+<img src="./Task3/4. Publish to Azure.png" width="500"/>
+</p>
+
+- Cant setup and deploy because free cost limit is exceeded
+
