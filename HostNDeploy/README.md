@@ -12,6 +12,7 @@ Running Application in local machine
 <img src="./Task1/Published.png" width="500"/>
 </p>
 
+####
 
 ## Task 2 Deploy your ASP.Net Core application to Azure App Service.
 
@@ -21,10 +22,13 @@ Running Application in local machine
 <p align="center">
 <img src="./Task2/1. Create Azure Publish File.png" width="500"/>
 </p>
+
 - Login to Azure Portal and verify that all resources were created. 
+
 <p align="center">
 <img src="./Task2/2. Azure Resource Group.png" width="500"/>
 </p>
+
 - Find App Service and open the app link **https://aldakul.azurewebsites.net/** in the browser to verify it is up and running as expected.
 <p align="center">
 <img src="./Task2/3. WebSite Page.png" width="500"/>
