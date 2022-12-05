@@ -12,7 +12,7 @@ Running Application in local machine
 <img src="./Task1/Published.png" width="500"/>
 </p>
 
-####
+---
 
 ## Task 2 Deploy your ASP.Net Core application to Azure App Service.
 
